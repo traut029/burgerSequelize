@@ -1,28 +1,70 @@
-<h1>Burgers!</h1>
-
-<h2>Burgers Again</h2>
-
-<ul>
-  {{#each burgers}}
-   <p>{{this.burger_name}}</p>
-  {{/each}}
-</ul>
+<h1>Eat-Da-Burger!</h1>
 
 
+<h2>Not Devoured</h2>
+<div id="uneaten">
+    {{#each burgers}}
+    <form class="devour"> 
+        {{#unless devoured}} 
+        {{this.id}}. {{this.burger_name}}
+    <button type="submit" value="{{this.id}}"class="devourButton">Devour!</button>
+    <br>
+    {{/unless}}
+    </form>
+     {{/each}}
+</div>
+<h2>Devoured</h2>
+<div id="eaten">
+
+    {{#each burgers}} <form>{{#if devoured}} {{this.id}}. {{this.burger_name}}
+    <br> {{/if}} </form>{{/each}}
+
+</div>
 
 <h2>Add a Burger</h2>
 <form class="create-form">
 
-  <div class="form-group">
-    <label for="new-burger">Burger Name:</label>
-    <input type="text" id="new-burger" name="name">
-  </div>
+    <div class="form-group">
+        <label for="new-burger">Burger Name:</label>
+        <input type="text" id="new-burger" name="name">
+    </div>
 
-  {{!-- <div class="form-group">
-    <label for="sleepy">Sleepy?</label><br>
-    <input type="radio" name="sleepy" value="1" checked> Sleepy!<br>
-    <input type="radio" name="sleepy" value="0"> Awake
-  </div> --}}
-
-  <button type="submit">Add Burger</button>
+    <button type="submit">Add Burger</button>
 </form>
+<script>
+    $(".create-form").on("submit", function (event) {
+        // Make sure to preventDefault on a submit event.
+        event.preventDefault();
+
+        var newBurger = { burgerName: $("#new-burger").val().trim() };
+
+        console.log(newBurger);
+        // Send the POST request.
+        $.ajax("/api/burgers", {
+            type: "POST",
+            data: newBurger
+        }).then(
+            function () {
+                console.log(newBurger);
+               // Reload the page to get the updated list
+        location.reload();
+            }
+        );
+    });
+    $(".devourButton").on("click", function (event) {
+        var id = $(this).val();
+        console.log(id)
+        var burgerId = {
+            burgerId: id
+        };
+        // Send the PUT request.
+        $.ajax("/api/devour/", {
+            type: "PUT",
+            data: burgerId
+        }).then(
+            function () {});
+    });
+
+
+
+</script>
