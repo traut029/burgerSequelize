@@ -1,36 +1,55 @@
-<h1>Eat-Da-Burger!</h1>
 
 
-<h2>Not Devoured</h2>
-<div id="uneaten">
-    {{#each burgers}}
-    <form class="devour"> 
-        {{#unless devoured}} 
-        {{this.id}}. {{this.burger_name}}
-    <button type="submit" value="{{this.id}}"class="devourButton">Devour!</button>
-    <br>
-    {{/unless}}
-    </form>
-     {{/each}}
-</div>
-<h2>Devoured</h2>
-<div id="eaten">
 
-    {{#each burgers}} <form>{{#if devoured}} {{this.id}}. {{this.burger_name}}
-    <br> {{/if}} </form>{{/each}}
-
-</div>
-
-<h2>Add a Burger</h2>
-<form class="create-form">
-
-    <div class="form-group">
-        <label for="new-burger">Burger Name:</label>
-        <input type="text" id="new-burger" name="name">
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <img class="img-fluid" id="burger-image"src="assets/img/burger-image.png">
+        </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center">Eat-Da-Burger!</h1>
+        </div>
+    </div>
+<div class="row">
+    <div class="col-md-4 offset-md-2" <div id="uneaten">
+       
+        {{#each burgers}} {{#unless devoured}}
+        <div class="undevoured card-body d-inline-block">{{this.id}}. {{this.burger_name}}</div>
+        <div class="d-inline-block">
+            <button type="submit" value="{{this.id}}" class="devourButton">Devour!</button>
+        </div>
+        <br>
+        {{/unless}} {{/each}}
+    </div>
+    <div class="col-md-6">
+       
+        <div id="eaten">
 
-    <button type="submit">Add Burger</button>
-</form>
+            {{#each burgers}}
+            {{#if devoured}} <div class="card-body devoured">{{this.id}}. {{this.burger_name}}<br></div>
+                 {{/if}} {{/each}}
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="text-center">Add a Burger</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <form class="create-form text-center">
+            <div class="form-group">
+                <label for="new-burger"></label>
+                <input type="text" id="new-burger" name="name">
+            </div>
+                <button type="submit">Add Burger</button>
+        </form>
+    </div>
+</div>
 <script>
     $(".create-form").on("submit", function (event) {
         // Make sure to preventDefault on a submit event.
@@ -46,8 +65,8 @@
         }).then(
             function () {
                 console.log(newBurger);
-               // Reload the page to get the updated list
-        location.reload();
+                // Reload the page to get the updated list
+                location.reload();
             }
         );
     });
@@ -61,10 +80,10 @@
         $.ajax("/api/devour/", {
             type: "PUT",
             data: burgerId
-        }).then(
-            function () {});
-    });
-
+        }).then(function(){
+            location.reload();
+        });
+    })
 
 
 </script>

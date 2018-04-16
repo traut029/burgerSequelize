@@ -1,0 +1,22 @@
+h1 {color:grey}
+h2{color:grey}
+body {background-color:#cfebea;}
+.card-body{
+    background-color:white;
+  width:50%;
+  margin-bottom:20px;
+  border:solid 1px black;
+  margin-right:20px;
+}
+.devoured{
+    margin-bottom:5px;
+    padding-top:0px;
+    padding-bottom:0px;
+    background-color:lightgrey;
+    
+}
+#burger-image{
+    width:300px;
+    
+
+}
