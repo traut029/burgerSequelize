@@ -1,28 +1,22 @@
-// Set up MySQL connection.
-var mysql = require("mysql");
+// Set up MySQL sequelize.
+var Sequelize = require("sequelize");
 
-var connection;
+var sequelize;
 if (process.env.JAWSDB_URL) {
-    connection=mysql.createConnection(process.env.JAWSDB_URL);
+    sequelize=mysql.createsequelize(process.env.JAWSDB_URL);
 }
 else {
-    connection = mysql.createConnection({
-        port: 8889,
+    var sequelize = new Sequelize("burgers_db", "root", "root", {
         host: "localhost",
-        user: "root",
-        password: "root",
-        database: "burgers_db"
-    });
+        port:8889,
+        dialect: "mysql",
+        pool: {
+          max: 5,
+          min: 0,
+          idle: 10000
+        }
+      });
 }
 
-// Make connection.
-connection.connect(function (err) {
-    if (err) {
-        console.error("error connecting: " + err.stack);
-        return;
-    }
-    console.log("connected as id " + connection.threadId);
-});
-
-// Export connection for our ORM to use.
-module.exports = connection;
+// Export sequelize for our ORM to use.
+module.exports = sequelize;
