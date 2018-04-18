@@ -1,6 +1,6 @@
 // Set up MySQL sequelize.
 var Sequelize = require("sequelize");
-
+var mysql=require("mysql");
 var sequelize;
 if (process.env.JAWSDB_URL) {
     sequelize=mysql.createsequelize(process.env.JAWSDB_URL);
