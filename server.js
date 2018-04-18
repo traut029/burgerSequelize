@@ -25,8 +25,11 @@ var routes = require("./controllers/burgers_controller.js");
 //Run routes
 app.use(routes);
 
+//Require models
+var db=require("./models")
 //Start server
+db.sequelize.sync().then(function(){
 app.listen(PORT, function() {
     console.log("App now listening at localhost:" + PORT);
   });
-  
+})
